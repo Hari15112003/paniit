@@ -75,7 +75,7 @@ class _ActiveCoursesState extends State<ActiveCourses> {
                       Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            const CustomIconData(
+                            CustomIconData(
                               iconData: Icons.person,
                               color: Colors.blue,
                               size: 18,
@@ -91,7 +91,7 @@ class _ActiveCoursesState extends State<ActiveCourses> {
                         children: [
                           Row(
                             children: [
-                              const CustomIconData(
+                              CustomIconData(
                                 iconData: Icons.star,
                                 color: Colors.yellow,
                                 size: 27,

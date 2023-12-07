@@ -19,10 +19,9 @@ class ForwardButton extends StatelessWidget {
           color: Colors.grey.shade200,
           borderRadius: BorderRadius.circular(15),
         ),
-        child: const CustomIconData(
+        child: CustomIconData(
           size: 16,
           iconData: Icons.arrow_forward_ios_rounded,
-          color: Colors.black,
         ),
       ),
     );

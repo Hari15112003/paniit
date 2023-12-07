@@ -7,6 +7,9 @@ import 'package:name/pages/analytics.dart';
 import 'package:name/pages/home.dart';
 import 'package:name/pages/pomodoro.dart';
 import 'package:name/settings/account_screen.dart';
+import 'package:name/video/video_play.dart';
+
+import 'authentication/start/splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,10 +19,12 @@ Future<void> main() async {
 
   // locking potrait mode
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  runApp(const MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: App(),
-  ));
+  runApp(
+    const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: SplashScreen(),
+    ),
+  );
 }
 
 class App extends StatefulWidget {

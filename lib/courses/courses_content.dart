@@ -54,23 +54,20 @@ class _CoursesContentState extends State<CoursesContent> {
               const Placeholder(
                 fallbackHeight: 220,
               ),
-              CustomTextData(
+              LargeText(
                 text: courseTitle,
-                size: 20,
-                color: Colors.black,
               ),
               Row(
                 children: [
-                  const CustomIconData(
+                  CustomIconData(
                       iconData: Icons.person, color: Colors.blue, size: 24),
-                  CustomTextData(
-                    text: authorName,
-                    size: 20,
-                    color: Colors.blue,
+                  Text(
+                    authorName,
+                    style: TextStyle(fontSize: 20, color: Colors.blue),
                   ),
                   IconButton(
                     onPressed: () {},
-                    icon: const CustomIconData(
+                    icon: CustomIconData(
                         iconData: Icons.favorite, color: Colors.blue, size: 24),
                   ),
                 ],
@@ -102,7 +99,7 @@ class _CoursesContentState extends State<CoursesContent> {
                       color: Colors.blue),
                 ),
               ),
-              const CustomTextData(
+            LargeText(
                 color: Colors.black,
                 size: 20,
                 text: "Course Contents",

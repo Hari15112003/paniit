@@ -16,7 +16,7 @@ class Header extends StatelessWidget {
     double height = customSizeData.height;
     double width = customSizeData.width;
     return Container(
-      height: height * 0.28,
+      height: height * 0.27,
       decoration: BoxDecoration(
           color: Colors.blue.shade100.withOpacity(0.4),
           borderRadius: const BorderRadius.only(
@@ -27,17 +27,23 @@ class Header extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              ClipRRect(
+                child: Image.asset(
+                  'assets/png/logo1.png',
+                  height: height * 0.15,
+                  fit: BoxFit.cover,
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomTextData(
-                        text: DateFormat.yMMMd().format(
-                          DateTime.now(),
-                        ),
-                        size: 12,
-                        color: Colors.black),
+                    SmallText(
+                      text: DateFormat.yMMMd().format(
+                        DateTime.now(),
+                      ),
+                    ),
                     Text(
                       "Hey, $name !",
                       style: GoogleFonts.akayaKanadaka(fontSize: 25),
@@ -46,7 +52,7 @@ class Header extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.only(right: 20, bottom: 20, top: 20),
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: Container(
@@ -91,31 +97,26 @@ class HeaderBottom extends StatelessWidget {
     CustomSizeData customSizeData = CustomSizeData.from(context);
     double height = customSizeData.height;
     double width = customSizeData.width;
-    return AnimatedPadding(
-      duration: const Duration(seconds: 3),
-      padding: const EdgeInsets.all(20),
-      curve: Curves.easeInOut,
-      child: Container(
-        height: height * 0.10,
-        width: width * 0.185,
-        padding: const EdgeInsets.all(2),
-        decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 83, 30, 229).withOpacity(.9),
-            borderRadius: BorderRadius.circular(20)),
-        child: Column(
-          children: [
-            Text(
-              count.toString(),
-              style: const TextStyle(color: Colors.white, fontSize: 28),
+    return Container(
+      height: height * 0.10,
+      width: width * 0.185,
+      padding: const EdgeInsets.all(2),
+      decoration: BoxDecoration(
+          color: const Color.fromARGB(255, 83, 30, 229).withOpacity(.9),
+          borderRadius: BorderRadius.circular(20)),
+      child: Column(
+        children: [
+          Text(
+            count.toString(),
+            style: const TextStyle(color: Colors.white, fontSize: 28),
+          ),
+          Text(
+            description,
+            style: TextStyle(
+              color: Colors.white24.withOpacity(0.6),
             ),
-            Text(
-              description,
-              style: TextStyle(
-                color: Colors.white24.withOpacity(0.6),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

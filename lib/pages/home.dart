@@ -18,19 +18,21 @@ class HomePage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Header(),
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-          child: CustomTextData(
-              text: "Enrolled Courses", size: 20, color: Colors.black),
-        ),
+        paddingContent(text: "Enrolled Courses"),
         const ActiveCourses(),
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-          child: CustomTextData(
-              text: "Special Courses", size: 20, color: Colors.black),
-        ),
+        paddingContent(text: "Popular Courses"),
         const SpecialCourses(),
       ],
+    );
+  }
+
+  Widget paddingContent({required String text}) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      child: LargeText(
+        text: text,
+        size: 20,
+      ),
     );
   }
 }

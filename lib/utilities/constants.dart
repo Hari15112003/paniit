@@ -1,17 +1,17 @@
 // pattent_for_contents
 // 'courses1': [
 //    1. "image_url"
-//    2. "tag_line"
+//    2. "course name"
 //    3. "author name"
 //    4. "ratings"
 //    5. "amount",
-//    6. "preview image or video"
+//    6. "preview image\"
 //    7. "total lessons"
 //    8.  "total_hours needed to cover the topic",
-//    9. "Liked or disliked"
-//    10. "description"
-//    11. enrolled or not enrolled
-//    12. cart or not in
+//    9. "Liked or disliked" (str)
+//    10. "description" (tes)
+//    11. enrolled or not enrolled (stu)
+//    12. cart or not in (stu)
 //    13. atlast follow categories fall in
 //   ],
 
@@ -134,7 +134,7 @@ Map<String, List> coursesList = {
     ' This course is about how you can invest money wisely and make it grow with time  It will teach you how to code in a way that makes your money work for you.Youl learn how to write effective codes that will help you achieve financial freedom This course will also give you insights into market trends so that you can make wise decisions. Dont miss out on this opportunity. Enroll now!It will teach you how to code in a way that makes your money work for you. Youll learn how to write effective codes that will help you achieve financial freedom. This course will also give you insights into market trends so that you can make wise decisions. Dont miss out on this opportunity Enroll now!is about how you can invest money wisely and make it grow with time  It will teach you how to code in a way that makes your money work for you.Youl learn how to write effective codes that will help you achieve financial freedom This course will also give you insights into market trends so that you can make wise decisions. Dont miss out on this opportunity. Enroll now!It will teach you how to code in a way that makes your money work for you. Youll learn how to write effective codes that will help you achieve financial freedom. This course will also give you insights into market trends so that you can make wise decisions. Dont miss out on this opportunity Enroll now!',
     true,
     true,
-    [chipData.first, chipData[4]],
+    [chipData.first, chipData[1]],
   ],
 };
 

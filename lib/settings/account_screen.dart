@@ -2,13 +2,15 @@
 
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:name/authentication/auth/signin.dart';
 import 'package:name/custom/custom_icon.dart';
 import 'package:name/custom/custom_text.dart';
-import 'package:name/screen/cart/cart_page.dart';
-import 'package:name/screen/instructor/instructor_course_add.dart';
+import 'package:name/instructor/create_course.dart';
+import 'package:name/instructor/instructor_course_add.dart';
 import 'package:name/settings/setting_item.dart';
 import 'package:name/utilities/navigation.dart';
 import 'package:provider/provider.dart';
@@ -33,6 +35,14 @@ class _AccountScreenState extends State<AccountScreen> {
   updatelanguage(Locale locale) {
     Get.back();
     Get.updateLocale(locale);
+  }
+
+  late Future<bool?> isInstructorMode;
+
+  @override
+  void initState() {
+    isInstructorMode = isInstructor();
+    super.initState();
   }
 
   builddialog(BuildContext context, languageChange) {
@@ -94,13 +104,11 @@ class _AccountScreenState extends State<AccountScreen> {
                 ),
                 IconButton(
                     onPressed: () {
-                      navigationpush(
-                          widget: const CartPage(), context: context);
+                      // navigationpush(
+                      //     widget: const CartPage(), context: context);
                     },
-                    icon: const CustomIconData(
-                        iconData: Icons.shopping_cart,
-                        color: Colors.black,
-                        size: 27))
+                    icon:
+                        CustomIconData(iconData: Icons.shopping_cart, size: 27))
               ],
             ),
             const SizedBox(height: 25),
@@ -113,20 +121,36 @@ class _AccountScreenState extends State<AccountScreen> {
             const Align(
               alignment: Alignment.center,
               child: Row(
-                children: [Icon(Icons.email), Text("harish.rr.9791@gmail.com")],
+                children: [
+                  Icon(Icons.email),
+                  Text(
+                    "harish.rr.9791@gmail.com",
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 20),
             TextButton(
                 onPressed: () {
-                  navigationpush(
-                      widget: const InstructorCourseAddPage(),
-                      context: context);
+                  if (isInstructorMode == false) {
+                    changeInstructor();
+
+                    navigationpush(
+                        widget: const CreateCourse(), context: context);
+                  } else {
+                    //TODO:
+                    // navigate to instructor home page (ask first)
+                    navigationpush(
+                        widget: const CreateCourse(), context: context);
+                  }
                 },
-                child: const CustomTextData(
-                    text: "Switch to instructor view",
-                    size: 20,
-                    color: Colors.purple)),
+                child: LargeText(
+                  text: isInstructorMode == true
+                      ? "Became an Instructor"
+                      : "Switch to instructor",
+                  size: 20,
+                  color: Colors.purpleAccent,
+                )),
             SettingItem(
               title: "language".tr,
               icon: Icons.public,
@@ -161,9 +185,64 @@ class _AccountScreenState extends State<AccountScreen> {
               onTap: () {},
             ),
             const SizedBox(height: 20),
+            OutlinedButton(
+              onPressed: () async {
+                _signOut();
+              },
+              child: Text("Sign out"),
+            )
           ],
         ),
       ),
     );
+  }
+
+  Future<void> changeInstructor() async {
+    final docRe = FirebaseFirestore.instance
+        .collection("students")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update({"isInstructor": true});
+    final docRef = FirebaseFirestore.instance
+        .collection("students")
+        .doc(FirebaseAuth.instance.currentUser!.uid);
+    await docRef.get().then(
+      (DocumentSnapshot<Map<String, dynamic>> doc) {
+        if (doc.exists) {
+          // final data = doc.data();
+          final bool = doc.get('isInstructor');
+          setState(() {
+            isInstructorMode = bool;
+          });
+          print(bool);
+          // print(data);
+        } else {
+          print("Document does not exist");
+        }
+      },
+      // ignore: avoid_print
+    ).catchError((e) => print("Error getting document: $e"));
+  }
+
+  Future<bool?> isInstructor() async {
+    bool? instructor;
+    final docRef = FirebaseFirestore.instance
+        .collection("students")
+        .doc(FirebaseAuth.instance.currentUser!.uid);
+    await docRef.get().then((DocumentSnapshot<Map<String, dynamic>> doc) {
+      if (doc.exists) {
+        instructor = doc.get('isInstructor');
+        print(instructor);
+      }
+    });
+    return instructor;
+  }
+
+  Future<void> _signOut() async {
+    await FirebaseAuth.instance.signOut().then(
+          (value) => Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => login()),
+              (route) => false),
+        );
   }
 }

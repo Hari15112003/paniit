@@ -6,7 +6,6 @@ import 'package:name/utilities/navigation.dart';
 
 import '../custom/custom_icon.dart';
 import '../custom/custom_size.dart';
-import '../screen/cart/cart_page.dart';
 
 class CoursesList extends StatefulWidget {
   const CoursesList({super.key});
@@ -48,22 +47,20 @@ class _CoursesListState extends State<CoursesList> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Padding(
+                Padding(
                   padding: EdgeInsets.only(
                     left: 20,
                   ),
-                  child: CustomTextData(
+                  child: LargeText(
                       text: "Categories", size: 19, color: Colors.black),
                 ),
                 IconButton(
                     onPressed: () {
-                      navigationpush(
-                          widget: const CartPage(), context: context);
+                      // navigationpush(
+                      //     widget: const CartPage(), context: context);
                     },
-                    icon: const CustomIconData(
-                        iconData: Icons.shopping_cart,
-                        color: Colors.black,
-                        size: 27))
+                    icon:
+                        CustomIconData(iconData: Icons.shopping_cart, size: 27))
               ],
             ),
             Padding(
@@ -166,7 +163,7 @@ class _CoursesListState extends State<CoursesList> {
                                       ),
                                     ),
                                     Row(children: [
-                                      const CustomIconData(
+                                      CustomIconData(
                                           iconData: Icons.person,
                                           color: Colors.blue,
                                           size: 18),
@@ -180,7 +177,7 @@ class _CoursesListState extends State<CoursesList> {
                                       children: [
                                         Row(
                                           children: [
-                                            const CustomIconData(
+                                            CustomIconData(
                                                 iconData: Icons.star,
                                                 color: Colors.yellow,
                                                 size: 27),

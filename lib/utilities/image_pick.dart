@@ -21,3 +21,15 @@ Future<File?> pickImage(BuildContext context) async {
 
   return image;
 }
+
+pickVideo(BuildContext context) async {
+  final picker = ImagePicker();
+  XFile? videoFile;
+  try {
+    videoFile = await picker.pickVideo(
+        source: ImageSource.gallery, maxDuration: Duration(minutes: 30));
+    return videoFile!;
+  } catch (e) {
+    showSnackBar(context: context, content: e.toString());
+  }
+}

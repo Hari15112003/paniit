@@ -1,22 +1,25 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 
 class CustomIconData extends StatelessWidget {
   final IconData iconData;
-  final Color color;
+  Color? color;
   final double size;
 
-  const CustomIconData(
-      {super.key,
-      required this.iconData,
-      required this.color,
-      required this.size});
+  CustomIconData({
+    this.color,
+    super.key,
+    required this.iconData,
+    required this.size,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Icon(
       iconData,
       size: size,
-      color: color,
+      color: color ?? Colors.black,
     );
   }
 }
