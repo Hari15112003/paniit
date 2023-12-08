@@ -1,15 +1,46 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:name/custom/custom_size.dart';
 import 'package:name/custom/custom_text.dart';
 
-class Header extends StatelessWidget {
+class Header extends StatefulWidget {
   Header({super.key});
 
-  String name = "Harish";
+  @override
+  State<Header> createState() => _HeaderState();
+}
+
+class _HeaderState extends State<Header> {
+  String name = "Welcome";
+  String active = '0';
+  String pending = '0';
+  String completed = '0';
+  String rupee = "\u{20B9}";
+  void initState() {
+    final docRef = FirebaseFirestore.instance
+        .collection("students")
+        .doc(FirebaseAuth.instance.currentUser!.uid);
+    docRef.get().then(
+      (DocumentSnapshot<Map<String, dynamic>> doc) {
+        if (doc.exists) {
+          setState(() {
+            name = doc.get('name').toString();
+            active = doc.get('moneyObtained').toString();
+            pending = doc.get('onHoldMoney').toString();
+            completed = doc.get('enrolledCourses').length.toString();
+          });
+        }
+      },
+    );
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     CustomSizeData customSizeData = CustomSizeData.from(context);
@@ -69,15 +100,15 @@ class Header extends StatelessWidget {
               )
             ],
           ),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               HeaderBottom(
-                description: "Active",
-                count: 13,
+                description: "Earned ",
+                count: ' $rupee $active',
               ),
-              HeaderBottom(description: "Pending", count: 15),
-              HeaderBottom(description: "Completed", count: 21),
+              HeaderBottom(description: "Pending ", count: '$rupee $pending'),
+              HeaderBottom(description: "Enrolled", count: completed),
             ],
           )
         ],
@@ -90,7 +121,7 @@ class HeaderBottom extends StatelessWidget {
   const HeaderBottom(
       {super.key, required this.description, required this.count});
   final String description;
-  final int count;
+  final String? count;
 
   @override
   Widget build(BuildContext context) {

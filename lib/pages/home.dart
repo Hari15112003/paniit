@@ -19,16 +19,16 @@ class HomePage extends StatelessWidget {
       children: [
         Header(),
         paddingContent(text: "Enrolled Courses"),
-        const ActiveCourses(),
+        const EnrolledCourses(),
         paddingContent(text: "Popular Courses"),
-        const SpecialCourses(),
+        const PopularCourses(),
       ],
     );
   }
 
   Widget paddingContent({required String text}) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       child: LargeText(
         text: text,
         size: 20,

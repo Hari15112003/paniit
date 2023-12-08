@@ -48,19 +48,25 @@ class _CoursesListState extends State<CoursesList> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(
+                  padding: const EdgeInsets.only(
                     left: 20,
                   ),
                   child: LargeText(
-                      text: "Categories", size: 19, color: Colors.black),
+                    text: "Categories",
+                    size: 19,
+                    color: Colors.black,
+                  ),
                 ),
                 IconButton(
-                    onPressed: () {
-                      // navigationpush(
-                      //     widget: const CartPage(), context: context);
-                    },
-                    icon:
-                        CustomIconData(iconData: Icons.shopping_cart, size: 27))
+                  onPressed: () {
+                    // navigationpush(
+                    //     widget: const CartPage(), context: context);
+                  },
+                  icon: CustomIconData(
+                    iconData: Icons.shopping_cart,
+                    size: 27,
+                  ),
+                )
               ],
             ),
             Padding(
@@ -115,7 +121,7 @@ class _CoursesListState extends State<CoursesList> {
                       onTap: () {
                         navigationpush(
                             widget: CoursesContent(
-                              courses: showCaseKey[index],
+                              courseName: showCaseKey[index],
                             ),
                             context: context);
                       },

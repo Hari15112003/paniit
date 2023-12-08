@@ -27,7 +27,7 @@ pickVideo(BuildContext context) async {
   XFile? videoFile;
   try {
     videoFile = await picker.pickVideo(
-        source: ImageSource.gallery, maxDuration: Duration(minutes: 30));
+        source: ImageSource.gallery, maxDuration: const Duration(minutes: 30));
     return videoFile!;
   } catch (e) {
     showSnackBar(context: context, content: e.toString());

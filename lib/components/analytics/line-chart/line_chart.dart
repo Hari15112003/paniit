@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../components/components_chart.dart';
 
-
 class LineChartSample2 extends StatefulWidget {
   const LineChartSample2({super.key});
 
@@ -42,9 +41,11 @@ class _LineChartSample2State extends State<LineChartSample2> {
           height: 34,
           child: TextButton(
             onPressed: () {
-              setState(() {
-                showAvg = !showAvg;
-              });
+              setState(
+                () {
+                  showAvg = !showAvg;
+                },
+              );
             },
             child: Text(
               'avg',

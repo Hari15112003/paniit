@@ -1,7 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:name/firebase/uid.dart';
 import 'package:name/settings/edit_item.dart';
 
 class ShowProfile extends StatefulWidget {
@@ -15,7 +12,6 @@ class _ShowProfileState extends State<ShowProfile> {
   @override
   Widget build(BuildContext context) {
     // final ap = Provider.of<AuthProvider>(context, listen: false);
-   
 
     return Scaffold(
       appBar: AppBar(

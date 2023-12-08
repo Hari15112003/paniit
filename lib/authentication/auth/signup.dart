@@ -1,12 +1,17 @@
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:name/firebase/student.dart';
 import 'package:name/main.dart';
+import 'package:name/pages/initial_page.dart';
 
 import '../../utilities/navigation.dart';
 import '../../utilities/snack_bar.dart';
 
 class SignupPage extends StatefulWidget {
+  const SignupPage({super.key});
+
   @override
   _SignupPageState createState() => _SignupPageState();
 }
@@ -41,23 +46,23 @@ class _SignupPageState extends State<SignupPage> {
               // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Join'),
+                const Text('Join'),
                 SizedBox(width: wid * 0.02),
-                Text(
+                const Text(
                   'Learn',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                   width: wid * 0.02,
                 ),
-                Text('to improve learning')
+                const Text('to improve learning')
               ],
             ),
             SizedBox(
               height: hei * 0.02,
             ),
             CircleAvatar(
-              backgroundColor: Color(0xFF6EDD8A),
+              backgroundColor: const Color(0xFF6EDD8A),
               maxRadius: hei * 0.065,
               child: Center(child: Image.asset('assets/png/profile.png')),
               // backgroundImage: NetworkImage('images/profile.png'),
@@ -79,17 +84,17 @@ class _SignupPageState extends State<SignupPage> {
                   left: wid * 0.065, right: wid * 0.065, top: hei * 0.025),
               child: TextField(
                 controller: nameController,
-                cursorColor: Color.fromARGB(255, 76, 157, 175),
+                cursorColor: const Color.fromARGB(255, 76, 157, 175),
                 decoration: InputDecoration(
-                    focusColor: Color.fromARGB(255, 76, 157, 175),
+                    focusColor: const Color.fromARGB(255, 76, 157, 175),
                     // hintStyle:,
 
-                    focusedBorder: OutlineInputBorder(
+                    focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Color.fromARGB(255, 76, 157, 175))),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    suffixIcon: Icon(Icons.person_outlined),
+                    suffixIcon: const Icon(Icons.person_outlined),
                     hintText: 'Enter your full name',
                     hintStyle: TextStyle(fontSize: hei * 0.02),
                     helperText: 'example: Abdul kalam',
@@ -104,17 +109,17 @@ class _SignupPageState extends State<SignupPage> {
                   left: wid * 0.065, right: wid * 0.065, top: hei * 0.025),
               child: TextField(
                 controller: emailController,
-                cursorColor: Color.fromARGB(255, 76, 157, 175),
+                cursorColor: const Color.fromARGB(255, 76, 157, 175),
                 decoration: InputDecoration(
-                    focusColor: Color.fromARGB(255, 76, 157, 175),
+                    focusColor: const Color.fromARGB(255, 76, 157, 175),
                     // hintStyle:,
 
-                    focusedBorder: OutlineInputBorder(
+                    focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Color.fromARGB(255, 76, 157, 175))),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    suffixIcon: Icon(Icons.email_outlined),
+                    suffixIcon: const Icon(Icons.email_outlined),
                     hintText: 'Enter your email',
                     hintStyle: TextStyle(fontSize: hei * 0.02),
                     helperText: 'example: abc@gmail.com',
@@ -129,17 +134,17 @@ class _SignupPageState extends State<SignupPage> {
                   left: wid * 0.065, right: wid * 0.065, top: hei * 0.025),
               child: TextField(
                 controller: upiIdController,
-                cursorColor: Color.fromARGB(255, 76, 157, 175),
+                cursorColor: const Color.fromARGB(255, 76, 157, 175),
                 decoration: InputDecoration(
-                    focusColor: Color.fromARGB(255, 76, 157, 175),
+                    focusColor: const Color.fromARGB(255, 76, 157, 175),
                     // hintStyle:,
 
-                    focusedBorder: OutlineInputBorder(
+                    focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Color.fromARGB(255, 76, 157, 175))),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    suffixIcon: Icon(Icons.file_upload_outlined),
+                    suffixIcon: const Icon(Icons.file_upload_outlined),
                     hintText: 'Enter your UID',
                     hintStyle: TextStyle(fontSize: hei * 0.02),
                     helperText: 'example: abc@okaxisbank',
@@ -155,12 +160,12 @@ class _SignupPageState extends State<SignupPage> {
               child: TextField(
                 controller: passwordController,
                 obscureText: _pass,
-                cursorColor: Color.fromARGB(255, 76, 157, 175),
+                cursorColor: const Color.fromARGB(255, 76, 157, 175),
                 decoration: InputDecoration(
-                    focusColor: Color.fromARGB(255, 76, 157, 175),
+                    focusColor: const Color.fromARGB(255, 76, 157, 175),
                     // hintStyle:,
 
-                    focusedBorder: OutlineInputBorder(
+                    focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Color.fromARGB(255, 76, 157, 175))),
                     border: OutlineInputBorder(
@@ -181,13 +186,13 @@ class _SignupPageState extends State<SignupPage> {
               child: Container(
                 // margin: Ed,
                 decoration: BoxDecoration(
-                    color: Color(0xFF6EDD8A),
+                    color: const Color(0xFF6EDD8A),
                     borderRadius: BorderRadius.circular(10)),
                 margin: EdgeInsets.only(
                     top: hei * 0.02, left: wid * 0.065, right: wid * 0.065),
                 // color: Colors.blue,
                 height: hei * 0.07,
-                child: Center(
+                child: const Center(
                     child: Text(
                   'Sign up',
                   style: TextStyle(
@@ -205,7 +210,7 @@ class _SignupPageState extends State<SignupPage> {
                         EdgeInsets.only(left: wid * 0.01, right: wid * 0.02),
                     height: hei * 0.01,
                     width: wid * 0.25,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         // color: Colors.blue,
                         border: BorderDirectional(bottom: BorderSide())),
                   ),
@@ -220,7 +225,7 @@ class _SignupPageState extends State<SignupPage> {
                         EdgeInsets.only(left: wid * 0.01, right: wid * 0.02),
                     height: hei * 0.01,
                     width: wid * 0.25,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         // color: Colors.blue,
                         border: BorderDirectional(bottom: BorderSide())),
                   )
@@ -234,13 +239,13 @@ class _SignupPageState extends State<SignupPage> {
               child: Container(
                 // margin: Ed,
                 decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xFF6EDD8A)),
+                    border: Border.all(color: const Color(0xFF6EDD8A)),
                     borderRadius: BorderRadius.circular(10)),
                 margin: EdgeInsets.only(
                     top: hei * 0.0, left: wid * 0.065, right: wid * 0.065),
                 // color: Colors.blue,
                 height: hei * 0.07,
-                child: Center(child: Text('Sign in')),
+                child: const Center(child: Text('Sign in')),
               ),
             ),
           ],
@@ -257,15 +262,15 @@ class _SignupPageState extends State<SignupPage> {
           });
         },
         icon: _pass
-            ? Icon(Icons.visibility_outlined)
-            : Icon(Icons.visibility_off_outlined));
+            ? const Icon(Icons.visibility_outlined)
+            : const Icon(Icons.visibility_off_outlined));
   }
 
   Widget textField(
       {required TextEditingController controller,
       required String hintText,
       required IconData icon}) {
-    return SizedBox();
+    return const SizedBox();
   }
 
   Future<void> _signUp(
@@ -287,13 +292,15 @@ class _SignupPageState extends State<SignupPage> {
       }).whenComplete(
         () => navigationpush(
           context: context,
-          widget: const App(),
+          // widget: const App(),
+          //TODO
+          widget:  StartingPage()
         ),
       );
       // Navigate to the home screen or display a success message
     } catch (e) {
       showSnackBar(context: context, content: e.toString());
-      print("Error during sign up: $e");
+
       // Handle error, e.g., display an error message
     }
   }

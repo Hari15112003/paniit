@@ -1,18 +1,23 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:name/authentication/start/splash_screen.dart';
+import 'package:name/pages/initial_page.dart';
+import 'package:name/utilities/snack_bar.dart';
 
 import '../../main.dart';
 import '../../utilities/navigation.dart';
 import 'signup.dart';
 
-class login extends StatefulWidget {
-  const login({super.key});
+class SignInPage extends StatefulWidget {
+  const SignInPage({super.key});
 
   @override
-  State<login> createState() => _loginState();
+  State<SignInPage> createState() => _SignInPageState();
 }
 
-class _loginState extends State<login> {
+class _SignInPageState extends State<SignInPage> {
   bool _pass = true;
   TextEditingController passwordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -29,7 +34,7 @@ class _loginState extends State<login> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Center(
-              child: Container(
+              child: SizedBox(
                 // margin: EdgeInsets.only(top: hei * 0.04),
                 height: hei * 0.28,
                 // margin: EdgeInsets.only(left: wid * 0.03),
@@ -45,16 +50,16 @@ class _loginState extends State<login> {
               // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Login to'),
+                const Text('Login to'),
                 SizedBox(width: wid * 0.02),
-                Text(
+                const Text(
                   'Learn',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                   width: wid * 0.02,
                 ),
-                Text('to continue learning.')
+                const Text('to continue learning.')
               ],
             ),
             Container(
@@ -63,17 +68,17 @@ class _loginState extends State<login> {
                   left: wid * 0.065, right: wid * 0.065, top: hei * 0.05),
               child: TextField(
                 controller: emailController,
-                cursorColor: Color.fromARGB(255, 76, 157, 175),
+                cursorColor: const Color.fromARGB(255, 76, 157, 175),
                 decoration: InputDecoration(
-                    focusColor: Color.fromARGB(255, 76, 157, 175),
+                    focusColor: const Color.fromARGB(255, 76, 157, 175),
                     // hintStyle:,
 
-                    focusedBorder: OutlineInputBorder(
+                    focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Color.fromARGB(255, 76, 157, 175))),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    suffixIcon: Icon(Icons.email_outlined),
+                    suffixIcon: const Icon(Icons.email_outlined),
                     labelStyle:
                         TextStyle(color: Colors.black, fontSize: hei * 0.018),
                     hintText: '123@gmail.com',
@@ -88,12 +93,12 @@ class _loginState extends State<login> {
               child: TextField(
                 controller: passwordController,
                 obscureText: _pass,
-                cursorColor: Color.fromARGB(255, 76, 157, 175),
+                cursorColor: const Color.fromARGB(255, 76, 157, 175),
                 decoration: InputDecoration(
-                    focusColor: Color.fromARGB(255, 76, 157, 175),
+                    focusColor: const Color.fromARGB(255, 76, 157, 175),
                     // hintStyle:,
 
-                    focusedBorder: OutlineInputBorder(
+                    focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Color.fromARGB(255, 76, 157, 175))),
                     border: OutlineInputBorder(
@@ -107,7 +112,7 @@ class _loginState extends State<login> {
               ),
             ),
             Container(
-              alignment: Alignment(1.0, 0.0),
+              alignment: const Alignment(1.0, 0.0),
               margin: EdgeInsets.only(right: wid * 0.06, top: hei * 0.04),
               child: Text(
                 'Forgot Password?',
@@ -123,13 +128,13 @@ class _loginState extends State<login> {
               child: Container(
                 // margin: Ed,
                 decoration: BoxDecoration(
-                    color: Color(0xFF6EDD8A),
+                    color: const Color(0xFF6EDD8A),
                     borderRadius: BorderRadius.circular(10)),
                 margin: EdgeInsets.only(
                     top: hei * 0.02, left: wid * 0.065, right: wid * 0.065),
                 // color: Colors.blue,
                 height: hei * 0.07,
-                child: Center(
+                child: const Center(
                     child: Text(
                   'Sign in',
                   style: TextStyle(
@@ -147,7 +152,7 @@ class _loginState extends State<login> {
                         EdgeInsets.only(left: wid * 0.02, right: wid * 0.02),
                     height: hei * 0.01,
                     width: wid * 0.2,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         // color: Colors.blue,
                         border: BorderDirectional(bottom: BorderSide())),
                   ),
@@ -162,7 +167,7 @@ class _loginState extends State<login> {
                         EdgeInsets.only(left: wid * 0.02, right: wid * 0.02),
                     height: hei * 0.01,
                     width: wid * 0.2,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         // color: Colors.blue,
                         border: BorderDirectional(bottom: BorderSide())),
                   )
@@ -171,19 +176,21 @@ class _loginState extends State<login> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SignupPage()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SignupPage()));
               },
               child: Container(
                 // margin: Ed,
                 decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xFF6EDD8A)),
+                    border: Border.all(color: const Color(0xFF6EDD8A)),
                     borderRadius: BorderRadius.circular(10)),
                 margin: EdgeInsets.only(
                     top: hei * 0.02, left: wid * 0.065, right: wid * 0.065),
                 // color: Colors.blue,
                 height: hei * 0.07,
-                child: Center(child: Text('Create Account')),
+                child: const Center(child: Text('Create Account')),
               ),
             ),
           ],
@@ -200,8 +207,8 @@ class _loginState extends State<login> {
           });
         },
         icon: _pass
-            ? Icon(Icons.visibility_outlined)
-            : Icon(Icons.visibility_off_outlined));
+            ? const Icon(Icons.visibility_outlined)
+            : const Icon(Icons.visibility_off_outlined));
   }
 
   Future<void> _signIn(
@@ -213,10 +220,15 @@ class _loginState extends State<login> {
             email: emailController.text,
             password: passwordController.text,
           )
-          .then((value) => navigationpush(context: context, widget: App()));
+          .then((value) => navigationpush(
+              context: context,
+              widget:
+                  //TODO
+                  const StartingPage()));
       // Navigate to the home screen or display a success message
     } catch (e) {
-      print("Error during sign in: $e");
+      showSnackBar(context: context, content: e.toString());
+
       // Handle error, e.g., display an error message
     }
   }

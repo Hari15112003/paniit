@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class ButterFlyAssetVideo extends StatefulWidget {
+  const ButterFlyAssetVideo({super.key});
+
   @override
   ButterFlyAssetVideoState createState() => ButterFlyAssetVideoState();
 }

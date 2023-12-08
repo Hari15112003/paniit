@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:name/custom/custom_icon.dart';
 import 'package:name/custom/custom_text.dart';
 
@@ -11,8 +10,8 @@ class PomodoroPage extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text("Pomadoro"),
-        Text("Pomadoro"),
+        const Text("Pomadoro"),
+        const Text("Pomadoro"),
         CustomIconData(
           iconData: Icons.abc,
           size: 60,

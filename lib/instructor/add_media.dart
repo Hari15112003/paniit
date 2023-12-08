@@ -1,7 +1,5 @@
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:name/firebase/instructor.dart';
 import 'package:name/instructor/instructor_course_add.dart';
@@ -27,8 +25,8 @@ class AddMedia extends StatefulWidget {
 }
 
 class _AddMediaState extends State<AddMedia> {
-  @override
   File? file;
+  @override
   Widget build(BuildContext context) {
     CustomSizeData customSizeData = CustomSizeData.from(context);
     double height = customSizeData.height;
@@ -37,7 +35,10 @@ class _AddMediaState extends State<AddMedia> {
       body: Column(
         children: [
           Row(
-            children: [Icon(Icons.arrow_back), Text(widget.courseName)],
+            children: [
+              const Icon(Icons.arrow_back),
+              Text(widget.courseName),
+            ],
           ),
           SizedBox(
             height: height * 0.90,
@@ -46,15 +47,12 @@ class _AddMediaState extends State<AddMedia> {
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                     onTap: () {
-                      FirestoreServiceInstructor().addChapter(
+                      FirestoreServiceInstructor().addLesson(
                           instructorId: FirebaseAuth.instance.currentUser!.uid,
                           courseName: widget.courseName,
                           chapterName: widget.chapterName,
-                          // lessonCount: widget.totalLessons,
                           lessonName: widget.lessonName[index],
-                          lessonFile: file);
-                      print(widget.chapterName);
-                      print(widget.lessonName[0]);
+                          lessonFile: file.toString());
                     },
                     child: textField(
                         text: widget.lessonName[index],
@@ -75,7 +73,7 @@ class _AddMediaState extends State<AddMedia> {
                       courseName: widget.courseName),
                   context: context);
             },
-            child: Text("Upload")),
+            child: const Text("Upload")),
       ),
     );
   }

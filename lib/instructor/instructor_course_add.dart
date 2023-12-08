@@ -7,6 +7,7 @@ import 'package:name/utilities/navigation.dart';
 import 'package:name/utilities/snack_bar.dart';
 
 import '../custom/custom_size.dart';
+import '../firebase/instructor.dart';
 import '../utilities/textfield.dart';
 
 class InstructorCourseAddPage extends StatefulWidget {
@@ -39,18 +40,18 @@ class _InstructorCourseAddPageState extends State<InstructorCourseAddPage> {
           TextEditingController totalChapter = TextEditingController();
           return AlertDialog(
             title: Text(course),
-            content: Container(
+            content: SizedBox(
               height: CustomSizeData.from(context).height * 0.3,
               width: double.maxFinite,
               child: Column(
                 children: [
-                  Text("Chapter title:"),
+                  const Text("Chapter title:"),
                   CustomTextEditor(
                     controller: title,
                     paddingValue: 20,
                     labelText: "title",
                   ),
-                  Text("Total No.of.lessons"),
+                  const Text("Total No.of.lessons"),
                   CustomTextEditor(
                     controller: totalChapter,
                     paddingValue: 20,
@@ -62,22 +63,28 @@ class _InstructorCourseAddPageState extends State<InstructorCourseAddPage> {
             actions: [
               TextButton(
                   onPressed: () {
-                    if (title.text.isNotEmpty && totalChapter.text.isNotEmpty)
+                    if (title.text.isNotEmpty && totalChapter.text.isNotEmpty) {
+                      FirestoreServiceInstructor().addChapter(
+                        instructorId: FirebaseAuth.instance.currentUser!.uid,
+                        courseName: widget.courseName,
+                        chapterName: title.text.trim(),
+                      ).whenComplete(() => 
                       navigationpush(
                           widget: ChapterScreen(
-                            chapterCount: widget.chapterCount,
+                              chapterCount: widget.chapterCount,
                               courseName: widget.courseName,
                               chapterName: title.text.trim(),
                               totalLessons:
                                   int.parse(totalChapter.text.toString())),
-                          context: context);
+                          context: context));
+                    }
                   },
-                  child: Text("Proceed")),
+                  child: const Text("Proceed")),
               TextButton(
                   onPressed: () {
                     navigationpop(context: context);
                   },
-                  child: Text("Cancel")),
+                  child: const Text("Cancel")),
             ],
           );
         });
@@ -104,9 +111,8 @@ class _InstructorCourseAddPageState extends State<InstructorCourseAddPage> {
               // ;(FirebaseAuth.instance.currentUser!.uid).snapshots();
               builder: (BuildContext context, snapshot) {
                 try {
-                  Map<String, dynamic> published_courses =
+                  Map<String, dynamic> publishedCourses =
                       snapshot.data!.get('coursePublished');
-                  print(published_courses[widget.courseName]);
 
                   //                  ..get().then(
                   //     (DocumentSnapshot<Map<String, dynamic>> doc) {
@@ -139,7 +145,7 @@ class _InstructorCourseAddPageState extends State<InstructorCourseAddPage> {
                         },
                       ),
                     ),
-                    Placeholder(
+                    const Placeholder(
                       fallbackHeight: 260,
                     ),
                     Container(

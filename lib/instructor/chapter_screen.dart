@@ -9,7 +9,8 @@ class ChapterScreen extends StatefulWidget {
       {super.key,
       required this.courseName,
       required this.totalLessons,
-      required this.chapterName, required this.chapterCount});
+      required this.chapterName,
+      required this.chapterCount});
   final String courseName;
   final int totalLessons;
   final int chapterCount;
@@ -24,7 +25,7 @@ class _ChapterScreenState extends State<ChapterScreen> {
   @override
   void initState() {
     textEditor.addAll(List.generate(widget.totalLessons,
-        (index) => TextEditingController(text: "Lesson ${index + 1} Name")));
+        (index) => TextEditingController(text: "Lesson ${index + 1} ")));
     super.initState();
   }
 
@@ -33,7 +34,6 @@ class _ChapterScreenState extends State<ChapterScreen> {
     CustomSizeData customSizeData = CustomSizeData.from(context);
     double height = customSizeData.height;
     double width = customSizeData.width;
-    print(widget.totalLessons);
 
     return SafeArea(
         child: Scaffold(
@@ -51,13 +51,13 @@ class _ChapterScreenState extends State<ChapterScreen> {
               ),
               Text(
                 widget.courseName,
-                style: TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
               )
             ],
           ),
           Expanded(
             flex: 2,
-            child: Container(
+            child: SizedBox(
               // color: Colors.amber,
               height: height * 0.7,
               width: width * 0.9,

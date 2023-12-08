@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:name/authentication/start/onboard_screen.dart';
+import 'package:name/authentication/auth/signin.dart';
+import 'package:name/authentication/wrapper/auth_wrapper.dart';
+import 'package:name/main.dart';
+import 'package:name/pages/initial_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -9,26 +12,29 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
-    with TickerProviderStateMixin {
-  late final AnimationController _controller =
-      AnimationController(duration: const Duration(seconds: 3), vsync: this)
-        ..repeat(reverse: false);
-  late final Animation<double> _animation =
-      CurvedAnimation(parent: _controller, curve: Curves.easeIn);
+class _SplashScreenState extends State<SplashScreen> {
+  // late final AnimationController _controller =
+  //     AnimationController(duration: const Duration(seconds: 3), vsync: this)
+  //       ..repeat(reverse: false);
+  // late final Animation<double> _animation =
+  //     CurvedAnimation(parent: _controller, curve: Curves.easeIn);
 
   @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  // void dispose() {
+  //   _controller.dispose();
+  //   super.dispose();
+  // }
 
   void initState() {
     super.initState();
-
-    Future.delayed(Duration(seconds: 3)).then((value) => {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => OnboardingScreen()))
+//TODO
+    Future.delayed(const Duration(seconds: 3)).then((value) => {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => StartingPage()
+                //  const App(),
+                ),
+          )
         });
   }
 
@@ -39,16 +45,13 @@ class _SplashScreenState extends State<SplashScreen>
       body: Column(
         children: [
           SizedBox(
-            height: hei * 0.15,
+            height: hei * 0.4,
           ),
-          ScaleTransition(
-            scale: _animation,
-            child: Center(
-              child: Image.asset('assets/png/logo.png'),
-            ),
+          Center(
+            child: Image.asset('assets/png/logo2.png'),
           ),
           SizedBox(
-            height: hei * 0.2,
+            height: hei * 0.36,
           ),
           SpinKitFadingFour(
             color: Color.fromARGB(255, 23, 125, 153),

@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:name/arun/about.dart';
 import 'package:name/authentication/auth/signin.dart';
 import 'package:name/custom/custom_icon.dart';
 import 'package:name/custom/custom_text.dart';
@@ -13,6 +14,7 @@ import 'package:name/instructor/create_course.dart';
 import 'package:name/instructor/instructor_course_add.dart';
 import 'package:name/settings/setting_item.dart';
 import 'package:name/utilities/navigation.dart';
+import 'package:name/utilities/snack_bar.dart';
 import 'package:provider/provider.dart';
 
 import '../utilities/button.dart';
@@ -132,6 +134,7 @@ class _AccountScreenState extends State<AccountScreen> {
             const SizedBox(height: 20),
             TextButton(
                 onPressed: () {
+                  // TODO: check this operator
                   if (isInstructorMode == false) {
                     changeInstructor();
 
@@ -182,14 +185,16 @@ class _AccountScreenState extends State<AccountScreen> {
               icon: Icons.description,
               bgColor: Colors.red.shade100,
               iconColor: Colors.red,
-              onTap: () {},
+              onTap: () {
+                navigationpush(widget: const AboutPage(), context: context);
+              },
             ),
             const SizedBox(height: 20),
             OutlinedButton(
               onPressed: () async {
                 _signOut();
               },
-              child: Text("Sign out"),
+              child: const Text("Sign out"),
             )
           ],
         ),
@@ -213,14 +218,9 @@ class _AccountScreenState extends State<AccountScreen> {
           setState(() {
             isInstructorMode = bool;
           });
-          print(bool);
-          // print(data);
-        } else {
-          print("Document does not exist");
-        }
+        } else {}
       },
-      // ignore: avoid_print
-    ).catchError((e) => print("Error getting document: $e"));
+    );
   }
 
   Future<bool?> isInstructor() async {
@@ -231,7 +231,6 @@ class _AccountScreenState extends State<AccountScreen> {
     await docRef.get().then((DocumentSnapshot<Map<String, dynamic>> doc) {
       if (doc.exists) {
         instructor = doc.get('isInstructor');
-        print(instructor);
       }
     });
     return instructor;
@@ -241,7 +240,7 @@ class _AccountScreenState extends State<AccountScreen> {
     await FirebaseAuth.instance.signOut().then(
           (value) => Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => login()),
+              MaterialPageRoute(builder: (context) => const SignInPage()),
               (route) => false),
         );
   }
