@@ -17,7 +17,7 @@ class AuthWrapper extends StatelessWidget {
           return const CircularProgressIndicator();
         } else if (snapshot.hasData && snapshot.data is User) {
           // User is signed in, navigate to the desired page
-          return const SplashScreen();
+          return const App();
           // return const SplashScreen(); // Replace YourHomePage with the actual home page widget
         } else {
           // User is not signed in, navigate to the sign-in screen

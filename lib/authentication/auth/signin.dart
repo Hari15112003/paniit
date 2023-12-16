@@ -215,16 +215,10 @@ class _SignInPageState extends State<SignInPage> {
       {required TextEditingController emailController,
       required TextEditingController passwordController}) async {
     try {
-      await _auth
-          .signInWithEmailAndPassword(
-            email: emailController.text,
-            password: passwordController.text,
-          )
-          .then((value) => navigationpush(
-              context: context,
-              widget:
-                  //TODO
-                  const StartingPage()));
+      await _auth.signInWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
       // Navigate to the home screen or display a success message
     } catch (e) {
       showSnackBar(context: context, content: e.toString());

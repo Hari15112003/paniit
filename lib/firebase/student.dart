@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirestoreServiceStudent {
@@ -8,10 +10,12 @@ class FirestoreServiceStudent {
       {required String userId,
       required String name,
       required String email,
+      required String? profile,
       required String upiId}) async {
     await _firestore.collection('students').doc(userId).set({
       'name': name,
       'email': email,
+      'profile':profile,
       'totalCourseCompleted': 0,
       'enrolledCourses': [],
       'moneyObtained': 0,

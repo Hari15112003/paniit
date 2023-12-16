@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:name/courses/courses_content.dart';
 import 'package:name/custom/custom_text.dart';
@@ -120,10 +122,7 @@ class _CoursesListState extends State<CoursesList> {
                     return GestureDetector(
                       onTap: () {
                         navigationpush(
-                            widget: CoursesContent(
-                              courseName: showCaseKey[index],
-                            ),
-                            context: context);
+                            widget: CoursesContent(), context: context);
                       },
                       child: Padding(
                           padding: const EdgeInsets.all(20.0),
@@ -150,8 +149,11 @@ class _CoursesListState extends State<CoursesList> {
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Placeholder(
-                                  fallbackWidth: width * 0.4,
+                                Container(
+                                  width: width * 0.4,
+                                  height: height,
+                                  child:
+                                      Image.asset('assets/images/course.jpg'),
                                 ),
                                 Column(
                                   mainAxisAlignment:
@@ -212,15 +214,14 @@ class _CoursesListState extends State<CoursesList> {
                                           padding:
                                               const EdgeInsets.only(left: 10),
                                           child: OutlinedButton(
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                callfunction(title);
+                                              },
                                               child: const Text("Enroll")),
                                         ),
                                         SizedBox(
                                           width: width * 0.07,
                                         ),
-                                        OutlinedButton(
-                                            onPressed: () {},
-                                            child: const Text("Cart"))
                                       ],
                                     )
                                   ],
@@ -239,5 +240,14 @@ class _CoursesListState extends State<CoursesList> {
         ),
       ),
     );
+  }
+
+  Future<void> callfunction(courseName) async {
+    final docRe = await FirebaseFirestore.instance
+        .collection("students")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update({
+      "enrolledCourses": [courseName + "asc"]
+    });
   }
 }

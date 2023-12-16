@@ -1,30 +1,27 @@
-//
-
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
 
-class ButterFlyAssetVideo extends StatefulWidget {
-  const ButterFlyAssetVideo({super.key});
+import 'mini_controller.dart';
 
+class VideoPlay extends StatefulWidget {
+  final String url;
+
+  const VideoPlay({super.key, required this.url});
   @override
-  ButterFlyAssetVideoState createState() => ButterFlyAssetVideoState();
+  VideoPlayState createState() => VideoPlayState();
 }
 
-class ButterFlyAssetVideoState extends State<ButterFlyAssetVideo> {
-  late VideoPlayerController _controller;
+class VideoPlayState extends State<VideoPlay> {
+  late MiniController _controller;
 
   @override
   void initState() {
     super.initState();
-    // ignore: deprecated_member_use
-    _controller = VideoPlayerController.network("https://youtu.be/7oIAs-0G4mw");
+    _controller = MiniController.asset(widget.url);
 
     _controller.addListener(() {
       setState(() {});
     });
-    _controller.setLooping(true);
-    _controller.initialize().then((_) => setState(() {}));
-    _controller.play();
+    _controller.initialize();
   }
 
   @override
@@ -35,30 +32,24 @@ class ButterFlyAssetVideoState extends State<ButterFlyAssetVideo> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.only(top: 20.0),
-            ),
-            const Text('With assets mp4'),
-            Container(
-              padding: const EdgeInsets.all(20),
-              child: AspectRatio(
-                aspectRatio: _controller.value.aspectRatio,
-                child: Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: <Widget>[
-                    VideoPlayer(_controller),
-                    _ControlsOverlay(controller: _controller),
-                    VideoProgressIndicator(_controller, allowScrubbing: true),
-                  ],
-                ),
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          Container(
+            padding: const EdgeInsets.all(20),
+            child: AspectRatio(
+              aspectRatio: _controller.value.aspectRatio,
+              child: Stack(
+                alignment: Alignment.bottomCenter,
+                children: <Widget>[
+                  VideoPlayer(_controller),
+                  _ControlsOverlay(controller: _controller),
+                  VideoProgressIndicator(_controller),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -67,17 +58,6 @@ class ButterFlyAssetVideoState extends State<ButterFlyAssetVideo> {
 class _ControlsOverlay extends StatelessWidget {
   const _ControlsOverlay({required this.controller});
 
-  static const List<Duration> _exampleCaptionOffsets = <Duration>[
-    Duration(seconds: -10),
-    Duration(seconds: -3),
-    Duration(seconds: -1, milliseconds: -500),
-    Duration(milliseconds: -250),
-    Duration.zero,
-    Duration(milliseconds: 250),
-    Duration(seconds: 1, milliseconds: 500),
-    Duration(seconds: 3),
-    Duration(seconds: 10),
-  ];
   static const List<double> _examplePlaybackRates = <double>[
     0.25,
     0.5,
@@ -89,7 +69,7 @@ class _ControlsOverlay extends StatelessWidget {
     10.0,
   ];
 
-  final VideoPlayerController controller;
+  final MiniController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -118,35 +98,6 @@ class _ControlsOverlay extends StatelessWidget {
           },
         ),
         Align(
-          alignment: Alignment.topLeft,
-          child: PopupMenuButton<Duration>(
-            initialValue: controller.value.captionOffset,
-            tooltip: 'Caption Offset',
-            onSelected: (Duration delay) {
-              controller.setCaptionOffset(delay);
-            },
-            itemBuilder: (BuildContext context) {
-              return <PopupMenuItem<Duration>>[
-                for (final Duration offsetDuration in _exampleCaptionOffsets)
-                  PopupMenuItem<Duration>(
-                    value: offsetDuration,
-                    child: Text('${offsetDuration.inMilliseconds}ms'),
-                  )
-              ];
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                // Using less vertical padding as the text is also longer
-                // horizontally, so it feels like it would need more spacing
-                // horizontally (matching the aspect ratio of the video).
-                vertical: 12,
-                horizontal: 16,
-              ),
-              child: Text('${controller.value.captionOffset.inMilliseconds}ms'),
-            ),
-          ),
-        ),
-        Align(
           alignment: Alignment.topRight,
           child: PopupMenuButton<double>(
             initialValue: controller.value.playbackSpeed,
@@ -165,13 +116,13 @@ class _ControlsOverlay extends StatelessWidget {
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(
-                // Using less vertical padding as the text is also longer
-                // horizontally, so it feels like it would need more spacing
-                // horizontally (matching the aspect ratio of the video).
                 vertical: 12,
                 horizontal: 16,
               ),
-              child: Text('${controller.value.playbackSpeed}x'),
+              child: Text(
+                '${controller.value.playbackSpeed}x',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ),
         ),

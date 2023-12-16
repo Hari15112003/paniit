@@ -6,8 +6,6 @@ import 'package:name/authentication/start/onboard_screen.dart';
 import 'package:name/authentication/wrapper/auth_wrapper.dart';
 import 'package:name/firebase_options.dart';
 import 'package:name/pages/initial_page.dart';
-// import 'package:name/screens/screens.dart';
-// import 'package:name/widgets/timrservice.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,54 +26,61 @@ Future<void> main() async {
   await prefs.setInt("initScreen", 1);
 
   runApp(
-    MaterialApp(debugShowCheckedModeBanner: false, home: AuthWrapper()),
+    MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: initScreen == 0 || initScreen == null
+          ? const OnboardingScreen()
+          : const AuthWrapper(),
+    ),
   );
 }
 
-// class App extends StatefulWidget {
-//   const App({super.key});
+class App extends StatefulWidget {
+  const App({super.key});
 
-//   @override
-//   State<App> createState() => _AppState();
-// }
+  @override
+  State<App> createState() => _AppState();
+}
 
-// class _AppState extends State<App> {
-//   DarkThemeProvider themeChangeProvider = DarkThemeProvider();
-//   // TimerService _timeService = TimerService();
-//   void getCurrentAppTheme() async {
-//     themeChangeProvider.setDarkTheme =
-//         await themeChangeProvider.darkThemePreferences.getTheme();
-//   }
+class _AppState extends State<App> {
+  DarkThemeProvider themeChangeProvider = DarkThemeProvider();
+  // TimerService _timeService = TimerService();
+  void getCurrentAppTheme() async {
+    themeChangeProvider.setDarkTheme =
+        await themeChangeProvider.darkThemePreferences.getTheme();
+  }
 
-//   @override
-//   void initState() {
-//     getCurrentAppTheme();
-//     super.initState();
-//   }
+  @override
+  void initState() {
+    getCurrentAppTheme();
+    super.initState();
+  }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return MultiProvider(
-//       providers: [
-//         ChangeNotifierProvider<DarkThemeProvider>(
-//             create: (_) => themeChangeProvider),
-//         // ChangeNotifierProvider<TimerService>(create: (_) => _timeService),
-//       ],
-//       child: Consumer<DarkThemeProvider>(
-//         builder: (context, themeProvider, child) {
-//           return GetMaterialApp(
-//             translations: LocalString(),
-//             locale: const Locale('en', 'US'),
-//             debugShowCheckedModeBanner: false,
-//             theme: Styles.themeData(themeProvider.getDarkTheme, context),
-//             home: const StartingPage(),
-//           );
-//         },
-//       ),
-//     );
-//   }
-//   //TODO: CLEAR ALL TODO LIST , Will pop scope add , theme shifting , font size matching , language add , analytics page , pomodopage
-// }
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<DarkThemeProvider>(
+            create: (_) => themeChangeProvider),
+        // ChangeNotifierProvider<TimerService>(create: (_) => _timeService),
+        // ChangeNotifierProvider<TimerService>(
+        //   create: (_) => _timeService,
+        // )
+      ],
+      builder: (context, child) {
+        DarkThemeProvider themeProvider = DarkThemeProvider();
+        return GetMaterialApp(
+          translations: LocalString(),
+          locale: const Locale('en', 'US'),
+          debugShowCheckedModeBanner: false,
+          theme: Styles.themeData(themeProvider.getDarkTheme, context),
+          home: const StartingPage(),
+        );
+      },
+    );
+  }
+  //TODO: CLEAR ALL TODO LIST , Will pop scope add , theme shifting , font size matching , language add , analytics page , pomodopage
+}
 
 
 //     MaterialApp(

@@ -1,13 +1,19 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
 
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:name/firebase/student.dart';
 import 'package:name/main.dart';
 import 'package:name/pages/initial_page.dart';
 
+import '../../utilities/image_pick.dart';
 import '../../utilities/navigation.dart';
 import '../../utilities/snack_bar.dart';
+
+import 'package:firebase_storage/firebase_storage.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -17,12 +23,30 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
+  File? image;
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController upiIdController = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _collection = FirebaseFirestore.instance;
+  final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
+
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    upiIdController.dispose();
+    super.dispose();
+  }
+
   bool _pass = true;
+
+  void selectedImage() async {
+    image = await pickImage(context);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     var hei = MediaQuery.of(context).size.height;
@@ -61,11 +85,23 @@ class _SignupPageState extends State<SignupPage> {
             SizedBox(
               height: hei * 0.02,
             ),
-            CircleAvatar(
-              backgroundColor: const Color(0xFF6EDD8A),
-              maxRadius: hei * 0.065,
-              child: Center(child: Image.asset('assets/png/profile.png')),
-              // backgroundImage: NetworkImage('images/profile.png'),
+            GestureDetector(
+              onTap: () {
+                print("ad");
+                selectedImage();
+              },
+              child: image == null
+                  ? CircleAvatar(
+                      backgroundColor: const Color(0xFF6EDD8A),
+                      maxRadius: hei * 0.065,
+                      child:
+                          Center(child: Image.asset('assets/png/profile.png')),
+                      // backgroundImage: NetworkImage('images/profile.png'),
+                    )
+                  : CircleAvatar(
+                      backgroundImage: FileImage(image!),
+                      radius: 50,
+                    ),
             ),
             SizedBox(
               height: hei * 0.01,
@@ -283,25 +319,38 @@ class _SignupPageState extends State<SignupPage> {
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       )
-          .whenComplete(() {
-        FirestoreServiceStudent().addStudent(
-            name: nameController.text.trim(),
-            email: emailController.text.trim(),
-            upiId: upiIdController.text.trim(),
-            userId: FirebaseAuth.instance.currentUser!.uid);
-      }).whenComplete(
-        () => navigationpush(
-          context: context,
-          // widget: const App(),
-          //TODO
-          widget:  StartingPage()
-        ),
-      );
+          .whenComplete(() async {
+        await storeFileToStorage(
+                "profilePic/${FirebaseAuth.instance.currentUser!.uid}", image!)
+            .then((value) {
+          FirestoreServiceStudent().addStudent(
+              name: nameController.text.trim(),
+              email: emailController.text.trim(),
+              upiId: upiIdController.text.trim(),
+              profile: value,
+              userId: FirebaseAuth.instance.currentUser!.uid);
+        });
+      });
+      // .whenComplete(
+      //   () => navigationpush(
+      //     context: context,
+      //     // widget: const App(),
+      //     //TODO
+      //     widget:  StartingPage()
+      //   ),
+      // );
       // Navigate to the home screen or display a success message
     } catch (e) {
       showSnackBar(context: context, content: e.toString());
 
       // Handle error, e.g., display an error message
     }
+  }
+
+  Future<String> storeFileToStorage(String ref, File file) async {
+    UploadTask uploadTask = _firebaseStorage.ref().child(ref).putFile(file);
+    TaskSnapshot snapshot = await uploadTask;
+    String downloadUrl = await snapshot.ref.getDownloadURL();
+    return downloadUrl;
   }
 }

@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:name/custom/custom_icon.dart';
 import 'package:name/utilities/navigation.dart';
 
 import '../../custom/custom_size.dart';
+import '../../utilities/constants.dart';
 
 class EnrolledCourses extends StatefulWidget {
   const EnrolledCourses({super.key});
@@ -33,21 +35,6 @@ class _EnrolledCoursesState extends State<EnrolledCourses> {
           }
           final documents = snapshot.data!.data();
 
-          var courseName = [];
-          List<int> amount = [];
-          List<int> hours = [];
-          List<String> image_file = [];
-          List<int> starRatings = [];
-          List<String> authorName = [];
-
-          courseName.addAll(documents!['enrolledCourses'].toList());
-          for (var i in courseName) {
-            hours.add(list_long[i]['hours']);
-            image_file.add(list_long[i]['file']);
-            starRatings.add(list_long[i]['starRatings']);
-            amount.add(list_long[i]['amount']);
-            authorName.add(list_long[i]['authorName']);
-          }
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: SizedBox(
@@ -55,18 +42,24 @@ class _EnrolledCoursesState extends State<EnrolledCourses> {
               width: double.infinity,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: courseName.length,
+                itemCount: coursesList.length,
                 itemBuilder: (BuildContext context, int index) {
-                  String imageUrl = image_file[index];
-                  String tagLine = courseName[index];
-                  String author = authorName[index];
-                  int rating = starRatings[index];
-                  int price = amount[index];
+                  // String imageUrl = image_file[index];
+                  // String tagLine = courseName[index];
+                  // String author = authorName[index];
+                  // int rating = starRatings[index];
+                  // int price = amount[index];
 
+                  String imageUrl = coursesList['courses${index + 1}']![0];
+                  String tagLine = coursesList['courses${index + 1}']![1];
+                  String authorName = coursesList['courses${index + 1}']![2];
+                  String rating = coursesList['courses${index + 1}']![3];
+                  String price = coursesList['courses${index + 1}']![4];
                   return GestureDetector(
                     onTap: () {
                       navigationpush(
-                        widget: CoursesContent(courseName: courseName[index]),
+                        widget:
+                            CoursesContent(),
                         context: context,
                       );
                     },
@@ -95,8 +88,9 @@ class _EnrolledCoursesState extends State<EnrolledCourses> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Placeholder(
-                              fallbackHeight: 130,
+                            Container(
+                              height: 150,
+                              child: Image.asset('assets/images/abc.jpg'),
                             ),
                             Text(
                               "  $tagLine",
@@ -115,7 +109,7 @@ class _EnrolledCoursesState extends State<EnrolledCourses> {
                                     size: 18,
                                   ),
                                   Text(
-                                    author,
+                                    "Harish",
                                     style: const TextStyle(
                                         fontSize: 16, color: Colors.blue),
                                   )
@@ -140,7 +134,7 @@ class _EnrolledCoursesState extends State<EnrolledCourses> {
                                   ],
                                 ),
                                 Text(
-                                  price.toString(),
+                                  "Amount: " + price.toString(),
                                   style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold),

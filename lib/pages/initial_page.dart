@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:name/courses/courses_list.dart';
 import 'package:name/pages/home.dart';
-import 'package:name/screens/screens.dart';
-
+import 'package:name/pages/pomodoro.dart';
 import '../settings/account_screen.dart';
 import '../utilities/navigation.dart';
 import 'analytics.dart';
-import 'pomodoro.dart';
 
 class StartingPage extends StatefulWidget {
   const StartingPage({super.key});

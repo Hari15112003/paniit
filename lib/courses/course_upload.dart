@@ -1,4 +1,14 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:name/firebase/instructor.dart';
+import 'package:name/instructor/instructor_course_add.dart';
+
+import '../utilities/image_pick.dart';
+import '../utilities/navigation.dart';
 
 class CourseUpload extends StatefulWidget {
   const CourseUpload({super.key});
@@ -8,14 +18,25 @@ class CourseUpload extends StatefulWidget {
 }
 
 class _CourseUploadState extends State<CourseUpload> {
+  File? image;
+  Future<void> selectedImage() async {
+    image = await pickImage(context);
+    setState(() {});
+  }
+
+  final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
   @override
   Widget build(BuildContext context) {
     var hei = MediaQuery.of(context).size.height;
     var wid = MediaQuery.of(context).size.width;
+    TextEditingController courseName = TextEditingController();
+    TextEditingController description = TextEditingController();
+    TextEditingController cost = TextEditingController();
+    TextEditingController duration = TextEditingController();
+    TextEditingController nochapter = TextEditingController();
+
     return Scaffold(
-        body: SingleChildScrollView(
-      child: Container(
-        // margin: EdgeInsets.only(left: wid * 0.2),
+      body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -37,6 +58,7 @@ class _CourseUploadState extends State<CourseUpload> {
                   top: hei * 0.05, left: wid * 0.06, right: wid * 0.06),
               child: TextField(
                 // maxLines: 2,
+                controller: courseName,
                 cursorColor: Color.fromARGB(255, 76, 157, 175),
                 decoration: InputDecoration(
                     focusColor: Color.fromARGB(255, 76, 157, 175),
@@ -63,6 +85,7 @@ class _CourseUploadState extends State<CourseUpload> {
                   top: hei * 0.04, left: wid * 0.06, right: wid * 0.06),
               child: TextField(
                 // maxLength: 3,
+                controller: description,
                 maxLines: 3,
                 cursorColor: Color.fromARGB(255, 76, 157, 175),
                 decoration: InputDecoration(
@@ -88,6 +111,7 @@ class _CourseUploadState extends State<CourseUpload> {
               margin: EdgeInsets.only(
                   top: hei * 0.04, left: wid * 0.06, right: wid * 0.06),
               child: TextField(
+                controller: cost,
                 cursorColor: Color.fromARGB(255, 76, 157, 175),
                 decoration: InputDecoration(
                     focusColor: Color.fromARGB(255, 76, 157, 175),
@@ -113,6 +137,7 @@ class _CourseUploadState extends State<CourseUpload> {
               margin: EdgeInsets.only(
                   top: hei * 0.04, left: wid * 0.06, right: wid * 0.06),
               child: TextField(
+                controller: duration,
                 keyboardType: TextInputType.number,
                 cursorColor: Color.fromARGB(255, 76, 157, 175),
                 decoration: InputDecoration(
@@ -139,6 +164,7 @@ class _CourseUploadState extends State<CourseUpload> {
               margin: EdgeInsets.only(
                   top: hei * 0.04, left: wid * 0.06, right: wid * 0.06),
               child: TextField(
+                controller: nochapter,
                 keyboardType: TextInputType.number,
                 cursorColor: Color.fromARGB(255, 76, 157, 175),
                 decoration: InputDecoration(
@@ -160,25 +186,51 @@ class _CourseUploadState extends State<CourseUpload> {
                     labelText: 'Number of Chapters'),
               ),
             ),
-            Container(
-              height: hei * 0.062,
-              //   padding: EdgeInsets.sy
-              // hmmetric(
-              //       horizontal: wid * 0.29, vertical: hei * 0.015),
-              decoration: BoxDecoration(
-                  border: Border.all(),
-                  borderRadius: BorderRadius.circular(10)),
-              margin: EdgeInsets.only(
-                  top: hei * 0.03,
-                  bottom: hei * 0.05,
-                  left: wid * 0.06,
-                  right: wid * 0.06),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Icon(Icons.attach_file_outlined),
-                  Text('Upload Thumbnail'),
-                ],
+            GestureDetector(
+              onTap: () async {
+                await selectedImage();
+                await storeFileToStorage(
+                        "course/${FirebaseAuth.instance.currentUser!.uid}",
+                        image!)
+                    .then((values) => FirestoreServiceInstructor().addCourse(
+                        instructorId: FirebaseAuth.instance.currentUser!.uid,
+                        courseName: courseName.text.trim(),
+                        description: description.text.trim(),
+                        amount: int.fromEnvironment(cost.text),
+                        chapterCount: int.fromEnvironment(nochapter.text),
+                        hours: int.fromEnvironment(duration.text),
+                        categories: ["All"],
+                        image: values))
+                    .whenComplete(
+                      () => navigationpush(
+                        context: context,
+                        widget: InstructorCourseAddPage(
+                          chapterCount: 5,
+                          courseName: courseName.text.trim(),
+                        ),
+                      ),
+                    );
+              },
+              child: Container(
+                height: hei * 0.062,
+                //   padding: EdgeInsets.sy
+                // hmmetric(
+                //       horizontal: wid * 0.29, vertical: hei * 0.015),
+                decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(10)),
+                margin: EdgeInsets.only(
+                    top: hei * 0.03,
+                    bottom: hei * 0.05,
+                    left: wid * 0.06,
+                    right: wid * 0.06),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Icon(Icons.attach_file_outlined),
+                    Text('Upload Thumbnail'),
+                  ],
+                ),
               ),
             ),
             Container(
@@ -202,6 +254,13 @@ class _CourseUploadState extends State<CourseUpload> {
           ],
         ),
       ),
-    ));
+    );
+  }
+
+  Future<String> storeFileToStorage(String ref, File file) async {
+    UploadTask uploadTask = _firebaseStorage.ref().child(ref).putFile(file);
+    TaskSnapshot snapshot = await uploadTask;
+    String downloadUrl = await snapshot.ref.getDownloadURL();
+    return downloadUrl;
   }
 }

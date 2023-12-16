@@ -215,7 +215,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             onPressed: () {
               int nextpage = page.currentPage + 1;
               if (nextpage == 4) {
-                navigationpush(widget: const StartingPage(), context: context);
+                navigationpush(widget: const AuthWrapper(), context: context);
                 // Navigator.push(
                 //     context,
                 //     MaterialPageRoute(

@@ -28,8 +28,9 @@ class _InstructorCourseAddPageState extends State<InstructorCourseAddPage> {
   //TODO
   // get the chapterCount some where else
   // String name of the course you are creating
-  int chapterCount = 10;
-  String courseName = "Science";
+
+  String image =
+      "https://media.istockphoto.com/id/1478944102/photo/abstract-technology-background-with-plexus-effect.jpg?s=2048x2048&w=is&k=20&c=WUKXhV021PEN5OUFxPtojVkDUz-eJLFxI7j5_BNpwRI=";
 
   builddialog(BuildContext context, String course) {
     showDialog(
@@ -64,19 +65,23 @@ class _InstructorCourseAddPageState extends State<InstructorCourseAddPage> {
               TextButton(
                   onPressed: () {
                     if (title.text.isNotEmpty && totalChapter.text.isNotEmpty) {
-                      FirestoreServiceInstructor().addChapter(
-                        instructorId: FirebaseAuth.instance.currentUser!.uid,
-                        courseName: widget.courseName,
-                        chapterName: title.text.trim(),
-                      ).whenComplete(() => 
-                      navigationpush(
-                          widget: ChapterScreen(
-                              chapterCount: widget.chapterCount,
-                              courseName: widget.courseName,
-                              chapterName: title.text.trim(),
-                              totalLessons:
-                                  int.parse(totalChapter.text.toString())),
-                          context: context));
+                      FirestoreServiceInstructor()
+                          .addChapter(
+                            instructorId:
+                                FirebaseAuth.instance.currentUser!.uid,
+                            courseName: widget.courseName,
+                            chapterName: title.text.trim(),
+                          )
+                          .whenComplete(
+                            () => navigationpush(
+                                widget: ChapterScreen(
+                                    chapterCount: widget.chapterCount,
+                                    courseName: widget.courseName,
+                                    chapterName: title.text.trim(),
+                                    totalLessons: int.parse(
+                                        totalChapter.text.toString())),
+                                context: context),
+                          );
                     }
                   },
                   child: const Text("Proceed")),
@@ -93,7 +98,7 @@ class _InstructorCourseAddPageState extends State<InstructorCourseAddPage> {
   @override
   Widget build(BuildContext context) {
     List<String> chapter =
-        List.generate(chapterCount, (index) => "Chapter$index");
+        List.generate(widget.chapterCount, (index) => "Chapter$index");
 
     CustomSizeData customSizeData = CustomSizeData.from(context);
     double height = customSizeData.height;
@@ -113,7 +118,7 @@ class _InstructorCourseAddPageState extends State<InstructorCourseAddPage> {
                 try {
                   Map<String, dynamic> publishedCourses =
                       snapshot.data!.get('coursePublished');
-
+                  image = publishedCourses['image'];
                   //                  ..get().then(
                   //     (DocumentSnapshot<Map<String, dynamic>> doc) {
                   //       if (doc.exists) {
@@ -145,8 +150,9 @@ class _InstructorCourseAddPageState extends State<InstructorCourseAddPage> {
                         },
                       ),
                     ),
-                    const Placeholder(
-                      fallbackHeight: 260,
+                    
+                    Container(
+                      child: Image.asset('assets/images/what.jpg')
                     ),
                     Container(
                       padding: const EdgeInsets.all(20),
@@ -177,7 +183,7 @@ class _InstructorCourseAddPageState extends State<InstructorCourseAddPage> {
                           //   ],
                           // ),
                           LargeText(
-                            text: courseName,
+                            text: widget.courseName,
                           ),
                           SizedBox(
                             height: height * 0.40,

@@ -57,7 +57,7 @@ class PieChart2State extends State {
             children: <Widget>[
               Indicator(
                 color: AppColors.contentColorBlue,
-                text: 'First',
+                text: 'Web',
                 isSquare: true,
               ),
               SizedBox(
@@ -65,7 +65,7 @@ class PieChart2State extends State {
               ),
               Indicator(
                 color: AppColors.contentColorYellow,
-                text: 'Second',
+                text: 'App',
                 isSquare: true,
               ),
               SizedBox(
@@ -73,7 +73,7 @@ class PieChart2State extends State {
               ),
               Indicator(
                 color: AppColors.contentColorPurple,
-                text: 'Third',
+                text: 'Flutter',
                 isSquare: true,
               ),
               SizedBox(
@@ -81,7 +81,7 @@ class PieChart2State extends State {
               ),
               Indicator(
                 color: AppColors.contentColorGreen,
-                text: 'Fourth',
+                text: 'Science',
                 isSquare: true,
               ),
               SizedBox(

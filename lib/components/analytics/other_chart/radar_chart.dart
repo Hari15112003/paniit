@@ -145,16 +145,19 @@ class _RadarChartSample1State extends State<RadarChartSample1> {
                   switch (index) {
                     case 0:
                       return RadarChartTitle(
-                        text: 'Mobile or Tablet',
+                        text: '50%',
                         angle: usedAngle,
                       );
                     case 2:
                       return RadarChartTitle(
-                        text: 'Desktop',
+                        text: '75%',
                         angle: usedAngle,
                       );
                     case 1:
-                      return RadarChartTitle(text: 'TV', angle: usedAngle);
+                      return RadarChartTitle(
+                        text: 'Completed',
+                        angle: usedAngle,
+                      );
                     default:
                       return const RadarChartTitle(text: '');
                   }
@@ -201,7 +204,7 @@ class _RadarChartSample1State extends State<RadarChartSample1> {
   List<RawDataSet> rawDataSets() {
     return [
       RawDataSet(
-        title: 'Fashion',
+        title: 'Marketing',
         color: widget.fashionColor,
         values: [
           300,
@@ -219,7 +222,7 @@ class _RadarChartSample1State extends State<RadarChartSample1> {
         ],
       ),
       RawDataSet(
-        title: 'Entertainment',
+        title: 'Business',
         color: widget.entertainmentColor,
         values: [
           200,
@@ -228,7 +231,7 @@ class _RadarChartSample1State extends State<RadarChartSample1> {
         ],
       ),
       RawDataSet(
-        title: 'Off-road Vehicle',
+        title: 'Freelancing',
         color: widget.offRoadColor,
         values: [
           150,
@@ -237,7 +240,7 @@ class _RadarChartSample1State extends State<RadarChartSample1> {
         ],
       ),
       RawDataSet(
-        title: 'Boxing',
+        title: 'Data Science',
         color: widget.boxingColor,
         values: [
           100,

@@ -24,8 +24,12 @@ class _ChapterScreenState extends State<ChapterScreen> {
 
   @override
   void initState() {
-    textEditor.addAll(List.generate(widget.totalLessons,
-        (index) => TextEditingController(text: "Lesson ${index + 1} ")));
+    textEditor.addAll(
+      List.generate(
+        widget.totalLessons,
+        (index) => TextEditingController(text: "Lesson ${index + 1} "),
+      ),
+    );
     super.initState();
   }
 
@@ -78,7 +82,8 @@ class _ChapterScreenState extends State<ChapterScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              OutlinedButton(
+              TextButton(
+               
                   onPressed: () {
                     List<String> values = textEditor
                         .map((controller) => controller.text)
@@ -96,6 +101,7 @@ class _ChapterScreenState extends State<ChapterScreen> {
                   child: const Text("Add Media")),
               OutlinedButton(
                   onPressed: () {}, child: const Text("Create New Lesson")),
+                  SizedBox(height: 300,)
             ],
           )
         ],

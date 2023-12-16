@@ -60,62 +60,59 @@ class _PopularCoursesState extends State<PopularCourses> {
           }
 
           // Iterate through documents
-          final documents = snapshot.data!.docs;
+          // final documents = snapshot.data!.docs;
 
-          List<String> courseName = [];
-          List<int> amount = [];
-          List<int> hours = [];
-          List<String> image_file = [];
-          List<int> starRatings = [];
-          List<String> authorName = [];
-          var documentsName = {};
+          // List<String> courseName = [];
+          // List<int> amount = [];
+          // List<int> hours = [];
+          // List<String> image_file = [];
+          // List<int> starRatings = [];
+          // List<String> authorName = [];
+          // var documentsName = {};
 
-          for (var document in documents) {
-            var model = document['coursePublished'];
-            documentsName.addAll(model);
-            list_long.addAll(documentsName);
-          }
-          // print(documentsName);
-          for (var models in documentsName.keys) {
-            courseName.add(models);
-          }
-          for (int i = 0; i < documentsName.length; i++) {
-            try {
-              var model = documentsName[courseName[i]];
-              // print(model);
-              // print(model['hours']);
-
-              hours.add(model['hours']);
-              amount.add(model['amount']);
-              image_file.add(model['file']);
-              starRatings.add(model['starRatings']);
-              authorName.add(model['authorName']);
-            } catch (e) {
-              print(e);
-            }
-          }
+          // for (var document in documents) {
+          //   var model = document['coursePublished'];
+          //   documentsName.addAll(model);
+          //   list_long.addAll(documentsName);
+          // }
+          // // print(documentsName);
+          // for (var models in documentsName.keys) {
+          //   courseName.add(models);
+          // }
+          // for (int i = 0; i < documentsName.length; i++) {
+          //   try {
+          //     var model = documentsName[courseName[i]];
+          //     hours.add(model['hours']);
+          //     amount.add(model['amount']);
+          //     image_file.add(model['file']);
+          //     starRatings.add(model['starRatings']);
+          //     authorName.add(model['authorName']);
+          //   } catch (e) {
+          //     print(e);
+          //   }
+          // }
           return SizedBox(
             height: height * 0.33,
             width: double.infinity,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: documentsName.length,
+              itemCount: coursesList.length,
               itemBuilder: (BuildContext context, int index) {
-                // String imageUrl = coursesList['courses${index + 1}']![0];
-                // String tagLine = coursesList['courses${index + 1}']![1];
-                // String authorName = coursesList['courses${index + 1}']![2];
-                // String rating = coursesList['courses${index + 1}']![3];
-                // String price = coursesList['courses${index + 1}']![4];
-                String imageUrl = image_file[index];
-                String tagLine = courseName[index];
-                String author = authorName[index];
-                int rating = starRatings[index];
-                int price = amount[index];
+                String imageUrl = coursesList['courses${index + 1}']![0];
+                String tagLine = coursesList['courses${index + 1}']![1];
+                String authorName = coursesList['courses${index + 1}']![2];
+                String rating = coursesList['courses${index + 1}']![3];
+                String price = coursesList['courses${index + 1}']![4];
+                // String imageUrl = image_file[index];
+                // String tagLine = courseName[index];
+                // String author = authorName[index];
+                // int rating = starRatings[index];
+                // int price = amount[index];
 
                 return GestureDetector(
                   onTap: () {
                     navigationpush(
-                        widget: CoursesContent(courseName: courseName[index]),
+                        widget: CoursesContent(),
                         context: context);
                   },
                   child: Padding(
@@ -141,32 +138,40 @@ class _PopularCoursesState extends State<PopularCourses> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Placeholder(
-                            fallbackHeight: 130,
+                          Container(
+                            height: 150,
+                            child: Image.asset(
+                              imageUrl,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                           Text(
                             "  $tagLine",
                             style: const TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                CustomIconData(
-                                    iconData: Icons.person,
-                                    color: Colors.blue,
-                                    size: 18),
-                                Text(
-                                  // TODO : add author
-                                  author,
-                                  style: const TextStyle(
-                                      fontSize: 16, color: Colors.blue),
-                                )
-                              ]),
+                          Padding(
+                            padding: EdgeInsets.only(left: 30),
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  CustomIconData(
+                                      iconData: Icons.person,
+                                      color: Colors.blue,
+                                      size: 20),
+                                  Text(
+                                    // TODO : add author
+                                    'author',
+                                    style: const TextStyle(
+                                        fontSize: 16, color: Colors.blue),
+                                  ),
+                                ]),
+                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   CustomIconData(
                                       iconData: Icons.star,
@@ -181,7 +186,7 @@ class _PopularCoursesState extends State<PopularCourses> {
                                 ],
                               ),
                               Text(
-                                price.toString(),
+                                "Amount: " + price.toString(),
                                 style: const TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.bold),
                               )

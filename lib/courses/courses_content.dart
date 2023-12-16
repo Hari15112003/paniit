@@ -1,59 +1,40 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:name/courses/expansion_panel.dart';
 import 'package:name/custom/custom_icon.dart';
 import 'package:name/custom/custom_text.dart';
 import 'package:name/utilities/constants.dart';
 import 'package:name/utilities/navigation.dart';
+import 'package:name/video/video_play.dart';
 import 'package:readmore/readmore.dart';
 
 import '../utilities/topbar.dart';
-import 'expansion_panel.dart';
+// import 'expansion_panel.dart';
 
 class CoursesContent extends StatefulWidget {
-  const CoursesContent({super.key, required this.courseName});
-  final String courseName;
+  const CoursesContent({
+    super.key,
+  });
 
   @override
   State<CoursesContent> createState() => _CoursesContentState();
 }
 
 class _CoursesContentState extends State<CoursesContent> {
-  // pattent_for_contents
-// 'courses1': [
-//    0. "image_url"
-//    1. "tag_line"
-//    2. "author name"
-//    3. "ratings"
-//    4. "amount",
-//    5. "preview image or video"
-//    6. "total lessons"
-//    7.  "total_hours needed to cover the topic",
-//    8. "Liked or disliked"
-//    9. "description"
-//    10. enrolled or not enrolled
-//    11. cart or not in
-//    12. atlast follow categories fall in
-//   ],
-  // late List<Item> _data;
-  // int index = 28;
-  // @override
-  // void initState() {
-  //   final List<Item> _data = generateItems(28);
-  //   super.initState();
-  // }
+  int index = 0;
+  Map<String, Map<String, dynamic>> data = {};
+  // List<Item> _data = [];
+  String courseName = "Invest Money Wisely";
 
-  final List<Item> _data = generateItems(28);
+  int _expandedIndex = -1;
+
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    // String courseTitle = coursesList[widget.courseName]![1];
-    // String lessonCount = coursesList[widget.courseName]![6];
-    // String lessonHours = coursesList[widget.courseName]![7];
-    // bool like = coursesList[widget.courseName]![8];
-    // String courseDescription = coursesList[widget.courseName]![9];
-    // String authorName = coursesList[widget.courseName]![2];
-    // String ratings = coursesList[widget.courseName]![3];
-
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -65,39 +46,39 @@ class _CoursesContentState extends State<CoursesContent> {
                 if (!snapshot.hasData) {
                   return const CircularProgressIndicator();
                 }
-                final documents = snapshot.data!.docs;
+                // List<DocumentSnapshot> documents = snapshot.data!.docs;
 
-                List<String> courseName = [];
-                List<int> amount = [];
-                List<int> hours = [];
-                List<String> image_file = [];
-                List<int> starRatings = [];
-                var documentsName = {};
-                List<int> chapterCount = [];
-                var lessonCount = [];
-                var description = [];
-                var category = [];
+                // List<String> courseNames = [];
+                // List<int> amount = [];
+                // List<int> hours = [];
+                // List<String> image_file = [];
+                // List<int> starRatings = [];
+                // var documentsName = {};
+                // List<int> chapterCount = [];
+                // // var lessonCount = [];
+                // var description = [];
+                // var category = [];
 
-                for (var document in documents) {
-                  var model = document['coursePublished'];
-                  documentsName.addAll(model);
-                }
-                print(documentsName);
-                // for (var models in documentsName.keys) {
-                //   courseName.add(models);
+                Map ss = {};
+                // for (var document in documents) {
+                //   var model = document['coursePublished'];
+                //   documentsName.addAll(model);
                 // }
-                // // print(documentsName);
+
+                // for (var models in documentsName.keys) {
+                //   courseNames.add(models);
+                // }
                 // for (int i = 0; i < documentsName.length; i++) {
                 //   try {
-                //     var model = documentsName[courseName[i]];
-                //     if (model == widget.courseName) {
+                //     var model = documentsName[courseNames[i]];
+                //     // print(model);
+                //     if (courseNames[i] == widget.courseName) {
                 //       hours.add(model['hours']);
                 //       amount.add(model['amount']);
                 //       image_file.add(model['file']);
                 //       starRatings.add(model['starRatings']);
                 //       chapterCount.add(model['chapterCount']);
-                //       Map ss = (model['chapters']);
-                //       lessonCount.add(ss.length);
+                //       ss = model['chapters'];
                 //       description.add(model['description']);
                 //       category.add(model['category']);
                 //     }
@@ -106,116 +87,231 @@ class _CoursesContentState extends State<CoursesContent> {
                 //     print(e);
                 //   }
                 // }
-                print(hours);
-                print(amount);
-                print(image_file);
-                print(starRatings);
-                print(chapterCount);
-                print(category);
+                // print("sdfgsfd: $ss");
+                //TODO : very important code
+                // var chapterName = [];
+                // for (var i in ss.keys) {
+                //   chapterName.add(i);
+                //   var lessonName = [];
+                //   for (var j in ss[i].keys) {
+                //     lessonName.add(j);
+                //   }
+                // }
+                // if (_data.isEmpty) {
+                //   _loadData(
+                //       documents); // Call a method to load data only once when the widget is created
+                // }
+                // for (var i in ss.keys) {
+                //   var chapterName = i;
+                //   List<String> lessonName = [];
+                //   for (var j in ss[i].keys) {
+                //     lessonName.add(j);
+                //   }
+                //   _data.add(Item(
+                //     chapterName: chapterName,
+                //     lessonNames: lessonName,
+                //   ));
+                // }
+                //  String imageUrl = coursesList['courses${index + 1}']![0];
+                // String tagLine = coursesList['courses${index + 1}']![1];
+                // String authorName = coursesList['courses${index + 1}']![2];
+                // String rating = coursesList['courses${index + 1}']![3];
+                // String price = coursesList['courses${index + 1}']![4];
 
                 return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TopBar(text: ""),
-                    const Placeholder(
-                      fallbackHeight: 220,
-                    ),
-                    LargeText(text: widget.courseName),
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: CustomIconData(
-                              iconData: Icons.person,
-                              color: Colors.blue,
-                              size: 24),
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const TopBar(text: ""),
+                      Container(
+                        height: 220,
+                        width: double.infinity,
+                        child: Image.asset(
+                          'assets/images/course.jpg',
+                          fit: BoxFit.cover,
                         ),
-                        Expanded(
-                          flex: 3,
-                          child: Text(
-                            'authorName'.toString(),
-                            style: const TextStyle(
-                                fontSize: 20, color: Colors.blue),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: IconButton(
-                            onPressed: () {},
-                            icon: CustomIconData(
-                                iconData: Icons.favorite,
+                      ),
+                      LargeText(text: "CSS GRID"),
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: CustomIconData(
+                                iconData: Icons.person,
                                 color: Colors.blue,
                                 size: 24),
                           ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: listTitle(
-                              icon: Icons.book,
-                              text: "${lessonCount[0]} Lessons"),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: listTitle(
-                              icon: Icons.timer, text: "${hours[0]} Hours"),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: listTitle(
-                              icon: Icons.star, text: "${starRatings[0]} "),
-                        )
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: ReadMoreText(
-                        description[0].toString(),
-                        trimLines: 5,
-                        trimMode: TrimMode.Line,
-                        trimCollapsedText: ' Show more',
-                        trimExpandedText: ' Show less',
-                        moreStyle: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue),
-                        lessStyle: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue),
+                          Expanded(
+                            flex: 3,
+                            child: Text(
+                              "Harish",
+                              style: const TextStyle(
+                                  fontSize: 20, color: Colors.blue),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: IconButton(
+                              onPressed: () {},
+                              icon: CustomIconData(
+                                iconData: Icons.favorite,
+                                color: Colors.blue,
+                                size: 24,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    LargeText(
-                      color: Colors.black,
-                      size: 20,
-                      text: "Course Contents",
-                    ),
-                    ExpansionPanelList(
-                      expansionCallback: (int index, bool isExpanded) {
-                        setState(() {
-                          _data[index].isExpanded = isExpanded;
-                        });
-                      },
-                      children: _data.map<ExpansionPanel>((Item item) {
-                        return ExpansionPanel(
-                          canTapOnHeader: true,
-                          headerBuilder:
-                              (BuildContext context, bool isExpanded) {
-                            return const ListTile(
-                              title: Text('item'),
-                            );
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child:
+                                listTitle(icon: Icons.book, text: "4 Lessons"),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child:
+                                listTitle(icon: Icons.timer, text: "2 Hours"),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: listTitle(icon: Icons.star, text: "4 "),
+                          )
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: ReadMoreText(
+                          "This course enables you to build high-performance, visually engaging, and user-friendly apps using Flutter and helps you master key concepts such as Flutter widgets, state management, asynchronous programming, and network integration, along with hands-on experience to build real-world applications.",
+                          trimLines: 5,
+                          trimMode: TrimMode.Line,
+                          trimCollapsedText: ' Show more',
+                          trimExpandedText: ' Show less',
+                          moreStyle: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue),
+                          lessStyle: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue),
+                        ),
+                      ),
+                      LargeText(
+                        color: Colors.black,
+                        size: 20,
+                        text: "Course Contents",
+                      ),
+                      MediumText(text: "Responsive layout"),
+                      VideoPlay(
+                        url: "assets/video/video1.mp4",
+                      ),
+                      Container(
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 4, horizontal: 8),
+                                decoration: BoxDecoration(
+                                  color: index == 1
+                                      ? Colors.amber.shade400
+                                      : Colors.grey.withOpacity(.1),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.star_rate_rounded),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text("10"),
+                                  ],
+                                ),
+                              )
+                            ]),
+                      ),
+                      GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              index = 1;
+                            });
                           },
-                          body: const ExpansionPanelListExample(),
-                          isExpanded: item.isExpanded,
-                        );
-                      }).toList(),
-                    )
-                  ],
-                );
+                          child: MediumText(text: "Grid Areas")),
+                      VideoPlay(
+                        url: "assets/video/video2.mp4",
+                      ),
+                      Container(
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 4, horizontal: 8),
+                                decoration: BoxDecoration(
+                                  color: index == 2
+                                      ? Colors.amber.shade400
+                                      : Colors.grey.withOpacity(.1),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.star_rate_rounded),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text("10"),
+                                  ],
+                                ),
+                              )
+                            ]),
+                      ),
+                      GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              index = 2;
+                            });
+                          },
+                          child: MediumText(text: "Justify and Align")),
+                      VideoPlay(
+                        url: "assets/video/video3.mp4",
+                      ),
+                      Container(
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 4, horizontal: 8),
+                                decoration: BoxDecoration(
+                                  color: index == 3
+                                      ? Colors.amber.shade400
+                                      : Colors.grey.withOpacity(.1),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.star_rate_rounded),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text("10"),
+                                  ],
+                                ),
+                              )
+                            ]),
+                      ),
+                    ]);
               }),
         ),
       ),
@@ -224,7 +320,63 @@ class _CoursesContentState extends State<CoursesContent> {
 
   Widget listTitle({required IconData icon, required String text}) {
     return Row(
-      children: [Icon(icon), Text(text)],
+      children: [
+        Icon(
+          icon,
+        ),
+        Text(
+          text,
+        ),
+      ],
     );
   }
+
+  void _loadData(List<DocumentSnapshot> documents) {
+    // Your existing data loading logic here...
+    // This method is now only called once when data is received from the StreamBuilder
+
+    Map ss = {}; // Assuming you extract ss from documents
+    for (var document in documents) {
+      var model = document['coursePublished'];
+
+      // Check if model and model['chapters'] are not null before accessing their properties
+      if (model != null && model['chapters'] != null) {
+        ss.addAll(model['chapters']);
+      }
+    }
+
+    for (var i in ss.keys) {
+      var chapterName = i;
+      List<String> lessonName = [];
+
+      // Check if ss[i] is not null and is a Map
+      if (ss[i] != null && ss[i] is Map) {
+        for (var j in ss[i].keys) {
+          // Check if ss[i][j] is not null before adding to lessonName
+          if (ss[i][j] != null) {
+            lessonName.add(j);
+          }
+        }
+      }
+
+      // _data.add(Item(
+      //   chapterName: chapterName,
+      //   lessonNames: lessonName,
+      // ));
+    }
+  }
 }
+
+
+
+// class Item {
+//   String chapterName;
+//   List<String> lessonNames;
+//   bool isExpanded;
+
+//   Item({
+//     required this.chapterName,
+//     required this.lessonNames,
+//     this.isExpanded = false,
+//   });
+// }

@@ -1,6 +1,6 @@
 // pattent_for_contents
 // 'courses1': [
-//    1. "image_url"
+//    1. "assets/images/abc.jpg"
 //    2. "course name"
 //    3. "author name"
 //    4. "ratings"
@@ -17,7 +17,7 @@
 
 Map<String, List> coursesList = {
   'courses1': [
-    "image_url",
+    'assets/asset_img/i1.jpg',
     "Invest Money Wisely",
     "Effective Code Learning",
     "5.0",
@@ -32,7 +32,7 @@ Map<String, List> coursesList = {
     [chipData.first, chipData[0]],
   ],
   'courses2': [
-    "image_url",
+    "assets/images/abc.jpg",
     "Invest Money Wisely",
     "Effective Code Learning",
     "5.0",
@@ -47,7 +47,7 @@ Map<String, List> coursesList = {
     [chipData.first, chipData[3]],
   ],
   'courses3': [
-    "image_url",
+    "assets/images/abc.jpg",
     "Invest Money Wisely",
     "Effective Code Learning",
     "5.0",
@@ -62,7 +62,7 @@ Map<String, List> coursesList = {
     [chipData.first, chipData.last],
   ],
   'courses4': [
-    "image_url",
+    "assets/asset_img/i2.jpg",
     "Invest Money Wisely",
     "Effective Code Learning",
     "5.0",
@@ -77,7 +77,7 @@ Map<String, List> coursesList = {
     [chipData.first, chipData.last],
   ],
   'courses5': [
-    "image_url",
+    "assets/images/abc.jpg",
     "Invest Money Wisely",
     "Effective Code Learning",
     "5.0",
@@ -92,7 +92,7 @@ Map<String, List> coursesList = {
     [chipData.first, chipData[2]],
   ],
   'courses6': [
-    "image_url",
+    'assets/asset_img/i4.jpg',
     "Invest Money Wisely",
     "Effective Code Learning",
     "5.0",
@@ -107,7 +107,7 @@ Map<String, List> coursesList = {
     [chipData.first, chipData.last],
   ],
   'courses7': [
-    "image_url",
+    "assets/images/abc.jpg",
     "Invest Money Wisely",
     "Effective Code Learning",
     "5.0",
@@ -122,7 +122,7 @@ Map<String, List> coursesList = {
     [chipData.first, chipData[5]],
   ],
   'courses8': [
-    "image_url",
+    'assets/asset_img/i1.jpg',
     "Invest Money Wisely",
     "Effective Code Learning",
     "5.0",

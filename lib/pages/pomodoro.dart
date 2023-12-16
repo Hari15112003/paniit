@@ -7,21 +7,10 @@ class PomodoroPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Text("Pomadoro"),
-        const Text("Pomadoro"),
-        CustomIconData(
-          iconData: Icons.abc,
-          size: 60,
-        ),
-        LargeText(
-          text: "Hello",
-        ),
-        SmallText(text: 'Hello'),
-        MediumText(text: "Hello")
-      ],
+    return Center(
+      child: LargeText(
+        text: "Under Development",
+      ),
     );
   }
 }

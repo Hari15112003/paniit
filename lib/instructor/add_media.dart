@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:name/firebase/instructor.dart';
 import 'package:name/instructor/instructor_course_add.dart';
+import 'package:name/utilities/image_pick.dart';
 import 'package:name/utilities/navigation.dart';
 
 import '../custom/custom_size.dart';
@@ -25,7 +27,13 @@ class AddMedia extends StatefulWidget {
 }
 
 class _AddMediaState extends State<AddMedia> {
+  final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
   File? file;
+  void selectedImage() async {
+    file = await pickVideo(context);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     CustomSizeData customSizeData = CustomSizeData.from(context);
@@ -46,13 +54,19 @@ class _AddMediaState extends State<AddMedia> {
                 itemCount: widget.lessonName.length,
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
-                    onTap: () {
-                      FirestoreServiceInstructor().addLesson(
-                          instructorId: FirebaseAuth.instance.currentUser!.uid,
-                          courseName: widget.courseName,
-                          chapterName: widget.chapterName,
-                          lessonName: widget.lessonName[index],
-                          lessonFile: file.toString());
+                    onTap: () async {
+                      await storeFileToStorage(
+                              "video/${FirebaseAuth.instance.currentUser!.uid}",
+                              file!)
+                          .then(
+                        (value) => FirestoreServiceInstructor().addLesson(
+                            instructorId:
+                                FirebaseAuth.instance.currentUser!.uid,
+                            courseName: widget.courseName,
+                            chapterName: widget.chapterName,
+                            lessonName: widget.lessonName[index],
+                            lessonFile: value),
+                      );
                     },
                     child: textField(
                         text: widget.lessonName[index],
@@ -76,6 +90,13 @@ class _AddMediaState extends State<AddMedia> {
             child: const Text("Upload")),
       ),
     );
+  }
+
+  Future<String> storeFileToStorage(String ref, File file) async {
+    UploadTask uploadTask = _firebaseStorage.ref().child(ref).putFile(file);
+    TaskSnapshot snapshot = await uploadTask;
+    String downloadUrl = await snapshot.ref.getDownloadURL();
+    return downloadUrl;
   }
 
   Widget textField(
